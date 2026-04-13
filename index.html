@@ -28,7 +28,9 @@
 
 <div class="container">
   <h2>Bảng Giá Vàng Hôm Nay</h2>
-  <p id="updateTime"></p>
+
+  <!-- 👉 THỜI GIAN CỐ ĐỊNH (BẠN SẼ SỬA DÒNG NÀY) -->
+  <p id="updateTime"><b>Cập nhật lúc: 13/04/2026 - 15:30</b></p>
 
   <table>
     <thead>
@@ -42,7 +44,7 @@
   </table>
 
   <div class="note">
-    <p>📍 Giá được cập nhật lúc 10h sáng hàng ngày</p>
+    <p>📍 Giá được cập nhật thủ công bởi cửa hàng</p>
     <p>📍 Giá có thể thay đổi theo thị trường</p>
     <p>📍 Liên hệ trực tiếp để có giá chính xác nhất</p>
   </div>
@@ -104,18 +106,6 @@
           <input id="sell${i}" value="${p.sell}">
         </div>`;
     });
-
-    // 👉 Hiển thị thời gian cập nhật đã lưu
-    const savedTime = localStorage.getItem("updateTime");
-
-    if(savedTime){
-      const date = new Date(savedTime);
-      document.getElementById("updateTime").innerText =
-        "Cập nhật lúc: " + date.toLocaleString();
-    } else {
-      document.getElementById("updateTime").innerText =
-        "Chưa có cập nhật";
-    }
   }
 
   function savePrices(){
@@ -126,14 +116,10 @@
       p.sell = Number(document.getElementById(`sell${i}`).value);
     });
 
-    // Lưu giá
+    // 👉 Lưu giá (chỉ lưu giá, KHÔNG lưu thời gian nữa)
     localStorage.setItem("goldPrices", JSON.stringify(prices));
 
-    // 👉 Lưu thời gian cập nhật
-    const now = new Date();
-    localStorage.setItem("updateTime", now.toISOString());
-
-    alert("Đã cập nhật giá vàng!");
+    alert("Đã cập nhật giá vàng!\n⚠️ Nhớ sửa thời gian trong code trước khi commit!");
     render();
   }
 
