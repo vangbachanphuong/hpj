@@ -30,11 +30,30 @@
   <h2>Bảng Giá Vàng Hôm Nay</h2>
 <p id="updateTime"></p>
 
-<script>
- 
+<p id="updateTime">Đang cập nhật...</p>
 
-  document.getElementById("updateTime").innerText = 
-    "Cập nhật lần cuối: " + timeString;
+<script>
+function timeAgo(date) {
+  const seconds = Math.floor((new Date() - date) / 1000);
+  const intervals = { năm:31536000, tháng:2592000, ngày:86400, giờ:3600, phút:60 };
+
+  for (let key in intervals) {
+    const value = Math.floor(seconds / intervals[key]);
+    if (value > 0) return value + " " + key + " trước";
+  }
+  return "vừa xong";
+}
+
+fetch("https://api.github.com/repos/vangbachanphuong/hpj/commits?path=index.html&t=" + new Date().getTime())
+  .then(res => res.json())
+  .then(data => {
+    const date = new Date(data[0].commit.committer.date);
+    document.getElementById("updateTime").innerText =
+      "Cập nhật lần cuối: " + date.toLocaleString('vi-VN') + " (" + timeAgo(date) + ")";
+  })
+  .catch(() => {
+    document.getElementById("updateTime").innerText = "Không lấy được thời gian";
+  });
 </script>
   <table>
     <thead>
