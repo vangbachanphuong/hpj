@@ -28,21 +28,13 @@
 
 <div class="container">
   <h2>Bảng Giá Vàng Hôm Nay</h2>
-<p id="updateTime">Đang cập nhật...</p>
+<p id="updateTime"></p>
 
 <script>
-fetch("https://api.github.com/repos/vangbachanphuong/hpj/commits?path=index.html")
-  .then(res => res.json())
-  .then(data => {
-    const date = new Date(data[0].commit.committer.date);
-    const formatted = date.toLocaleString('vi-VN');
-    document.getElementById("updateTime").innerText =
-      "Cập nhật lần cuối: " + formatted;
-  })
-  .catch(() => {
-    document.getElementById("updateTime").innerText =
-      "Không lấy được thời gian cập nhật";
-  });
+  const now = new Date();
+  const timeString = now.toLocaleString('vi-VN');
+  document.getElementById("updateTime").innerText = 
+    "Cập nhật lần cuối: " + timeString;
 </script>
   <table>
     <thead>
