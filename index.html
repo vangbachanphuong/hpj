@@ -22,39 +22,13 @@
 </head>
 <body>
 <header>
-  <h1>VÀNG BẠC HÀN PHƯƠNG-HPJ</h1>
+  <h1>VÀNG BẠC HÀN PHƯƠNG</h1>
   <p>Cập nhật giá vàng nhanh chóng - chính xác</p>
 </header>
 
 <div class="container">
   <h2>Bảng Giá Vàng Hôm Nay</h2>
-<p id="updateTime"></p>
-
-<p id="updateTime">Đang cập nhật...</p>
-
-<script>
-function timeAgo(date) {
-  const seconds = Math.floor((new Date() - date) / 1000);
-  const intervals = { năm:31536000, tháng:2592000, ngày:86400, giờ:3600, phút:60 };
-
-  for (let key in intervals) {
-    const value = Math.floor(seconds / intervals[key]);
-    if (value > 0) return value + " " + key + " trước";
-  }
-  return "vừa xong";
-}
-
-fetch("https://api.github.com/repos/vangbachanphuong/hpj/commits?path=index.html&t=" + new Date().getTime())
-  .then(res => res.json())
-  .then(data => {
-    const date = new Date(data[0].commit.committer.date);
-    document.getElementById("updateTime").innerText =
-      "Cập nhật lần cuối: " + date.toLocaleString('vi-VN') + " (" + timeAgo(date) + ")";
-  })
-  .catch(() => {
-    document.getElementById("updateTime").innerText = "Không lấy được thời gian";
-  });
-</script>
+  <p id="updateTime"></p>
   <table>
     <thead>
       <tr>
@@ -67,7 +41,7 @@ fetch("https://api.github.com/repos/vangbachanphuong/hpj/commits?path=index.html
   </table>
 
   <div class="note">
-    <p>📍 Giá được cập nhật hàng ngày lúc 10h00 sáng</p>
+    <p>📍 Giá được cập nhật hàng ngày lúc 10h sáng</p>
     <p>📍 Giá có thể thay đổi theo biến động thị trường</p>
     <p>📍 Vui lòng liên hệ trực tiếp để có giá chính xác tại thời điểm giao dịch</p>
   </div>
@@ -96,9 +70,9 @@ fetch("https://api.github.com/repos/vangbachanphuong/hpj/commits?path=index.html
 <script>
   const defaultPrices = [
     {name:"Nhẫn ép vỉ 9999", buy:15660000, sell:15940000},
-    {name:"Nhẫn tròn trơn 24K", buy:15450000, sell:15690000},
-    {name:"Vàng trang sức 23K", buy:15350000, sell:15660000},
-    {name:"Vàng tây 10K", buy:6200000, sell:7150000}
+    {name:"Nhẫn tròn trơn 24K", buy:15450000, sell:15700000},
+    {name:"Vàng trang sức 23K", buy:15350000, sell:15670000},
+    {name:"Vàng tây 10K", buy:6250000, sell:7150000}
   ];
 
   function loadPrices(){
