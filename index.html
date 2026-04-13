@@ -68,57 +68,32 @@
 </footer>
 
 <script>
-  const defaultPrices = [
+  // 👉 Bạn chỉ cần sửa giá tại đây
+  const prices = [
     {name:"Nhẫn ép vỉ 999,9", buy:15660000, sell:15940000},
     {name:"Nhẫn tròn trơn 24k", buy:15400000, sell:15690000},
     {name:"Vàng trang sức 23k", buy:15300000, sell:15670000},
     {name:"Vàng tây 10K", buy:6200000, sell:7150000}
   ];
 
-  function loadPrices(){
-    const saved = JSON.parse(localStorage.getItem("goldPrices"));
-    return saved || defaultPrices;
-  }
+  // 👉 Sửa thời gian tại đây khi cập nhật giá
+  const updateTime = "13/04/2026 16:30";
 
   function render(){
-    const prices = loadPrices();
     const table = document.getElementById("priceTable");
-    const admin = document.getElementById("adminInputs");
     table.innerHTML = "";
-    admin.innerHTML = "";
 
-    prices.forEach((p,i)=>{
-      table.innerHTML += `<tr><td>${p.name}</td><td>${p.buy.toLocaleString()}</td><td>${p.sell.toLocaleString()}</td></tr>`;
-
-      admin.innerHTML += `
-        <div>
-          ${p.name} - Mua: <input id="buy${i}" value="${p.buy}">
-          Bán: <input id="sell${i}" value="${p.sell}">
-        </div>`;
+    prices.forEach(p=>{
+      table.innerHTML += `
+        <tr>
+          <td>${p.name}</td>
+          <td>${p.buy.toLocaleString()}</td>
+          <td>${p.sell.toLocaleString()}</td>
+        </tr>`;
     });
 
-    document.getElementById("updateTime").innerText = "Cập nhật lúc: " + new Date().toLocaleString();
-  }
-
-  function savePrices(){
-    const prices = loadPrices();
-    prices.forEach((p,i)=>{
-      p.buy = Number(document.getElementById(`buy${i}`).value);
-      p.sell = Number(document.getElementById(`sell${i}`).value);
-    });
-    localStorage.setItem("goldPrices", JSON.stringify(prices));
-    function openAdmin(){
-  const pass = prompt("Nhập mật khẩu quản trị:");
-  if(pass === "hanphuong2026"){
-    document.querySelector('.admin').style.display = 'block';
-    alert('Đã mở trang cập nhật giá');
-  } else if(pass !== null){
-    alert('Sai mật khẩu');
-  }
-}
-
-render();
-    alert("Đã cập nhật giá vàng!");
+    document.getElementById("updateTime").innerText =
+      "Cập nhật lúc: " + updateTime;
   }
 
   render();
