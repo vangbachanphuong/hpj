@@ -29,6 +29,7 @@
 <div class="container">
   <h2>Bảng Giá Vàng Hôm Nay</h2>
   <p id="updateTime"></p>
+
   <table>
     <thead>
       <tr>
@@ -41,9 +42,9 @@
   </table>
 
   <div class="note">
-    <p>📍 Giá được cập nhật hàng ngày lúc 10h00 sáng</p>
-    <p>📍 Giá có thể thay đổi theo biến động thị trường</p>
-    <p>📍 Vui lòng liên hệ trực tiếp để có giá chính xác tại thời điểm giao dịch</p>
+    <p>📍 Giá được cập nhật thủ công bởi cửa hàng</p>
+    <p>📍 Giá có thể thay đổi theo thị trường</p>
+    <p>📍 Liên hệ trực tiếp để có giá chính xác nhất</p>
   </div>
 
   <div class="info">
@@ -84,41 +85,66 @@
     const prices = loadPrices();
     const table = document.getElementById("priceTable");
     const admin = document.getElementById("adminInputs");
+
     table.innerHTML = "";
     admin.innerHTML = "";
 
     prices.forEach((p,i)=>{
-      table.innerHTML += `<tr><td>${p.name}</td><td>${p.buy.toLocaleString()}</td><td>${p.sell.toLocaleString()}</td></tr>`;
+      table.innerHTML += `<tr>
+        <td>${p.name}</td>
+        <td>${p.buy.toLocaleString()}</td>
+        <td>${p.sell.toLocaleString()}</td>
+      </tr>`;
 
       admin.innerHTML += `
         <div>
-          ${p.name} - Mua: <input id="buy${i}" value="${p.buy}">
-          Bán: <input id="sell${i}" value="${p.sell}">
+          ${p.name} - Mua: 
+          <input id="buy${i}" value="${p.buy}">
+          Bán: 
+          <input id="sell${i}" value="${p.sell}">
         </div>`;
     });
 
-    document.getElementById("updateTime").innerText = "Cập nhật lúc: " + new Date().toLocaleString();
+    // 👉 Hiển thị thời gian cập nhật đã lưu
+    const savedTime = localStorage.getItem("updateTime");
+
+    if(savedTime){
+      const date = new Date(savedTime);
+      document.getElementById("updateTime").innerText =
+        "Cập nhật lúc: " + date.toLocaleString();
+    } else {
+      document.getElementById("updateTime").innerText =
+        "Chưa có cập nhật";
+    }
   }
 
   function savePrices(){
     const prices = loadPrices();
+
     prices.forEach((p,i)=>{
       p.buy = Number(document.getElementById(`buy${i}`).value);
       p.sell = Number(document.getElementById(`sell${i}`).value);
     });
-    localStorage.setItem("goldPrices", JSON.stringify(prices));
-    function openAdmin(){
-  const pass = prompt("Nhập mật khẩu quản trị:");
-  if(pass === "hanphuong2026"){
-    document.querySelector('.admin').style.display = 'block';
-    alert('Đã mở trang cập nhật giá');
-  } else if(pass !== null){
-    alert('Sai mật khẩu');
-  }
-}
 
-render();
+    // Lưu giá
+    localStorage.setItem("goldPrices", JSON.stringify(prices));
+
+    // 👉 Lưu thời gian cập nhật
+    const now = new Date();
+    localStorage.setItem("updateTime", now.toISOString());
+
     alert("Đã cập nhật giá vàng!");
+    render();
+  }
+
+  function openAdmin(){
+    const pass = prompt("Nhập mật khẩu quản trị:");
+    if(pass === "hanphuong2026"){
+      document.querySelector('.admin').style.display = 'block';
+      alert('Đã mở trang cập nhật giá');
+    } else if(pass !== null){
+      alert('Sai mật khẩu');
+    }
   }
 
   render();
