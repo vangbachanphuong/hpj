@@ -1,18 +1,21 @@
+```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Chống cache -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
   <title>Vàng Bạc Hàn Phương - Bảng Giá Vàng</title>
 
+  <!-- Thư viện biểu đồ -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -55,8 +58,12 @@
       background: #f0e6c0;
     }
 
+    /* ==============================
+       GIÁ VÀNG THẾ GIỚI
+       ============================== */
+
     .world-gold {
-      margin-top: 20px;
+      margin-top: 25px;
       background: linear-gradient(135deg, #fff8df, #fffdf5);
       border: 2px solid #b8962e;
       border-radius: 10px;
@@ -70,17 +77,16 @@
     }
 
     .world-price {
-      font-size: 28px;
+      font-size: 30px;
       font-weight: bold;
       color: #b8962e;
-      margin: 8px 0;
+      margin: 10px 0;
     }
 
     .world-vnd {
       font-size: 17px;
       font-weight: bold;
       color: #333;
-      margin-top: 8px;
     }
 
     .world-time {
@@ -89,21 +95,52 @@
       margin-top: 10px;
     }
 
-    .world-note {
-      font-size: 12px;
-      color: #777;
-      margin-top: 8px;
+    /* ==============================
+       BIỂU ĐỒ
+       ============================== */
+
+    .chart-box {
+      margin-top: 25px;
+      padding: 18px;
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
     }
 
-    .loading {
-      color: #777;
-      font-size: 15px;
+    .chart-box h3 {
+      margin-top: 0;
+      text-align: center;
+      color: #8c6d16;
     }
 
-    .error {
+    .chart-container {
+      position: relative;
+      height: 350px;
+      width: 100%;
+    }
+
+    .chart-loading {
+      text-align: center;
+      color: #777;
+      padding: 30px 0;
+    }
+
+    .chart-error {
+      text-align: center;
       color: #c62828;
-      font-size: 14px;
+      padding: 20px;
     }
+
+    .chart-info {
+      text-align: center;
+      color: #777;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    /* ==============================
+       GHI CHÚ
+       ============================== */
 
     .note {
       margin-top: 15px;
@@ -149,6 +186,7 @@
     }
 
     @media (max-width: 600px) {
+
       .container {
         margin: 10px;
         padding: 15px;
@@ -161,22 +199,33 @@
       }
 
       .world-price {
-        font-size: 24px;
+        font-size: 25px;
       }
 
       .world-vnd {
         font-size: 15px;
       }
+
+      .chart-container {
+        height: 280px;
+      }
+
     }
+
   </style>
 </head>
+
 
 <body>
 
 <header>
+
   <h1>VÀNG BẠC HÀN PHƯƠNG-HPJ</h1>
+
   <p>Cập nhật giá vàng nhanh chóng - chính xác</p>
+
 </header>
+
 
 <div class="container">
 
@@ -184,49 +233,81 @@
 
   <p id="updateTime"></p>
 
-  <!-- ============================= -->
-  <!-- BẢNG GIÁ VÀNG HÀN PHƯƠNG -->
-  <!-- ============================= -->
+
+  <!-- ==========================================
+       BẢNG GIÁ VÀNG HÀN PHƯƠNG
+       ========================================== -->
 
   <table>
+
     <thead>
+
       <tr>
         <th>Loại vàng</th>
         <th>Mua vào</th>
         <th>Bán ra</th>
       </tr>
+
     </thead>
 
     <tbody id="priceTable"></tbody>
+
   </table>
 
 
-  <!-- ============================= -->
-  <!-- GIÁ VÀNG THẾ GIỚI -->
-  <!-- ============================= -->
+  <!-- ==========================================
+       GIÁ VÀNG THẾ GIỚI
+       ========================================== -->
 
   <div class="world-gold">
 
     <h3>🌎 GIÁ VÀNG THẾ GIỚI</h3>
 
-    <div id="worldGoldPrice" class="loading">
-      Đang cập nhật giá vàng thế giới...
+    <div id="worldGoldPrice" class="world-price">
+      Đang cập nhật...
     </div>
 
     <div id="worldGoldVnd" class="world-vnd"></div>
 
     <div id="worldGoldTime" class="world-time"></div>
 
-    <div class="world-note">
-      XAU/USD - Giá tham khảo thị trường quốc tế
+  </div>
+
+
+  <!-- ==========================================
+       BIỂU ĐỒ GIÁ VÀNG THẾ GIỚI
+       ========================================== -->
+
+  <div class="chart-box">
+
+    <h3>📈 Biểu Đồ Giá Vàng Thế Giới - 24 Giờ</h3>
+
+    <div id="chartLoading" class="chart-loading">
+      Đang tải dữ liệu biểu đồ...
+    </div>
+
+    <div id="chartError" class="chart-error" style="display:none;">
+      Không thể tải dữ liệu biểu đồ.
+    </div>
+
+    <div id="chartContainer" class="chart-container" style="display:none;">
+
+      <canvas id="goldChart"></canvas>
+
+    </div>
+
+    <div class="chart-info">
+      XAU/USD - USD trên mỗi ounce vàng
+      <br>
+      Dữ liệu tham khảo quốc tế
     </div>
 
   </div>
 
 
-  <!-- ============================= -->
-  <!-- GHI CHÚ -->
-  <!-- ============================= -->
+  <!-- ==========================================
+       GHI CHÚ
+       ========================================== -->
 
   <div class="note">
 
@@ -239,15 +320,17 @@
   </div>
 
 
-  <!-- ============================= -->
-  <!-- LIÊN HỆ -->
-  <!-- ============================= -->
+  <!-- ==========================================
+       LIÊN HỆ
+       ========================================== -->
 
   <div class="info">
 
     <h3>Liên hệ</h3>
 
-    <p>Hotline/Zalo: 0379869169 - 0962358628</p>
+    <p>
+      Hotline/Zalo: 0379869169 - 0962358628
+    </p>
 
     <p>
       Cơ sở 1: Số 12 Vĩnh Tuy - Hai Bà Trưng - Hà Nội
@@ -260,9 +343,9 @@
   </div>
 
 
-  <!-- ============================= -->
-  <!-- ADMIN -->
-  <!-- ============================= -->
+  <!-- ==========================================
+       ADMIN
+       ========================================== -->
 
   <div class="admin">
 
@@ -296,294 +379,577 @@
 
 <script>
 
-  /* =====================================================
-     GIÁ VÀNG HÀN PHƯƠNG
-     👉 CHỈ CẦN SỬA GIÁ Ở ĐÂY
-     ===================================================== */
 
-  const prices = [
+/* =====================================================
+   GIÁ VÀNG HÀN PHƯƠNG
+   👉 SỬA GIÁ TẠI ĐÂY
+   ===================================================== */
 
-    {
-      name: "Nhẫn Tròn Trơn 24K",
-      buy: 13700000,
-      sell: 14000000
-    },
+const prices = [
 
-    {
-      name: "Nhẫn Ép Vỉ 99.99",
-      buy: 13800000,
-      sell: 14100000
-    },
+  {
+    name: "Nhẫn Tròn Trơn 24K",
+    buy: 13700000,
+    sell: 14000000
+  },
 
-    {
-      name: "Vàng trang sức 99.7",
-      buy: 13600000,
-      sell: 13950000
-    },
+  {
+    name: "Nhẫn Ép Vỉ 99.99",
+    buy: 13800000,
+    sell: 14100000
+  },
 
-    {
-      name: "Vàng tây 10K",
-      buy: 5500000,
-      sell: 6550000
+  {
+    name: "Vàng trang sức 99.7",
+    buy: 13600000,
+    sell: 13950000
+  },
+
+  {
+    name: "Vàng tây 10K",
+    buy: 5500000,
+    sell: 6550000
+  }
+
+];
+
+
+/* =====================================================
+   THỜI GIAN CẬP NHẬT GIÁ CỬA HÀNG
+
+   👉 Mỗi lần đổi giá, sửa dòng này.
+   ===================================================== */
+
+const updateTime = "21/08/2026 08:12:32";
+
+
+/* =====================================================
+   HIỂN THỊ BẢNG GIÁ
+   ===================================================== */
+
+function render() {
+
+  const table =
+    document.getElementById("priceTable");
+
+  table.innerHTML = "";
+
+
+  prices.forEach(function(p) {
+
+    table.innerHTML += `
+
+      <tr>
+
+        <td>${p.name}</td>
+
+        <td>
+          ${Number(p.buy).toLocaleString("vi-VN")} đ
+        </td>
+
+        <td>
+          ${Number(p.sell).toLocaleString("vi-VN")} đ
+        </td>
+
+      </tr>
+
+    `;
+
+  });
+
+
+  document.getElementById("updateTime").innerText =
+    "Cập nhật lúc: " + updateTime;
+
+}
+
+
+render();
+
+
+/* =====================================================
+   GIÁ VÀNG THẾ GIỚI
+   ===================================================== */
+
+async function loadWorldGold() {
+
+  const priceElement =
+    document.getElementById("worldGoldPrice");
+
+  const vndElement =
+    document.getElementById("worldGoldVnd");
+
+  const timeElement =
+    document.getElementById("worldGoldTime");
+
+
+  try {
+
+    const response = await fetch(
+      "https://xaus.com/api/v1/spot?currency=USD&unit=oz",
+      {
+        cache: "no-store"
+      }
+    );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Không lấy được giá vàng"
+      );
+
     }
 
-  ];
+
+    const data =
+      await response.json();
 
 
-  /* =====================================================
-     THỜI GIAN BẠN CẬP NHẬT GIÁ
-     👉 SỬA DÒNG NÀY MỖI KHI ĐỔI GIÁ
-     ===================================================== */
-
-  const updateTime = "21/08/2026 08:12:32";
+    const usdOz =
+      Number(data.spot_usd_oz);
 
 
-  /* =====================================================
-     HIỂN THỊ BẢNG GIÁ
-     ===================================================== */
+    if (!Number.isFinite(usdOz)) {
 
-  function render() {
+      throw new Error(
+        "Giá vàng không hợp lệ"
+      );
 
-    const table = document.getElementById("priceTable");
+    }
 
-    table.innerHTML = "";
 
-    prices.forEach(function(p) {
+    /* Giá USD/oz */
 
-      table.innerHTML += `
+    priceElement.innerText =
+      usdOz.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }) + " USD/oz";
 
-        <tr>
 
-          <td>${p.name}</td>
+    /* ==========================================
+       QUY ĐỔI THAM KHẢO VNĐ/LƯỢNG
 
-          <td>
-            ${Number(p.buy).toLocaleString("vi-VN")} đ
-          </td>
+       Tỷ giá tham khảo.
+       Không phải giá vàng trong nước.
+       ========================================== */
 
-          <td>
-            ${Number(p.sell).toLocaleString("vi-VN")} đ
-          </td>
+    const usdVnd = 26000;
 
-        </tr>
 
-      `;
+    const vndPerLuong =
+      usdOz * 1.205653 * usdVnd;
+
+
+    vndElement.innerText =
+      "≈ " +
+      Math.round(vndPerLuong)
+        .toLocaleString("vi-VN") +
+      " đ/lượng";
+
+
+    /* Thời gian */
+
+    if (data.price_as_of) {
+
+      const date =
+        new Date(data.price_as_of);
+
+      timeElement.innerText =
+        "Giá quốc tế ghi nhận: " +
+        date.toLocaleString("vi-VN");
+
+    } else {
+
+      timeElement.innerText =
+        "Dữ liệu XAU/USD quốc tế";
+
+    }
+
+
+  } catch (error) {
+
+    console.error(
+      "Lỗi giá vàng thế giới:",
+      error
+    );
+
+
+    priceElement.innerHTML =
+      '<span style="color:#c62828;">' +
+      'Không thể tải giá vàng thế giới' +
+      '</span>';
+
+    vndElement.innerText = "";
+
+    timeElement.innerText =
+      "Vui lòng thử lại sau.";
+
+  }
+
+}
+
+
+/* =====================================================
+   BIỂU ĐỒ GIÁ VÀNG 24 GIỜ
+   ===================================================== */
+
+let goldChart = null;
+
+
+async function loadGoldChart() {
+
+  const loading =
+    document.getElementById("chartLoading");
+
+  const error =
+    document.getElementById("chartError");
+
+  const container =
+    document.getElementById("chartContainer");
+
+
+  try {
+
+    loading.style.display = "block";
+
+    error.style.display = "none";
+
+    container.style.display = "none";
+
+
+    /*
+      XAUS ghi nhận giá vàng theo chu kỳ khoảng 2 phút.
+      Lấy dữ liệu 24 giờ gần nhất.
+    */
+
+    const response = await fetch(
+      "https://xaus.com/api/v1/intraday?symbol=xau&hours=24",
+      {
+        cache: "no-store"
+      }
+    );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "Không tải được dữ liệu biểu đồ"
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      !data.points ||
+      !Array.isArray(data.points) ||
+      data.points.length === 0
+    ) {
+
+      throw new Error(
+        "Không có dữ liệu biểu đồ"
+      );
+
+    }
+
+
+    /* ==========================================
+       CHUYỂN DỮ LIỆU API THÀNH DỮ LIỆU CHART
+       ========================================== */
+
+    const labels = [];
+
+    const prices = [];
+
+
+    data.points.forEach(function(point) {
+
+      const date =
+        new Date(point.t);
+
+      labels.push(
+        date.toLocaleTimeString(
+          "vi-VN",
+          {
+            hour: "2-digit",
+            minute: "2-digit"
+          }
+        )
+      );
+
+
+      prices.push(
+        Number(point.p)
+      );
 
     });
 
 
-    document.getElementById("updateTime").innerText =
-      "Cập nhật lúc: " + updateTime;
+    /* ==========================================
+       XÓA BIỂU ĐỒ CŨ NẾU CÓ
+       ========================================== */
 
-  }
+    if (goldChart) {
 
-
-  render();
-
-
-  /* =====================================================
-     GIÁ VÀNG THẾ GIỚI XAU/USD
-     API: XAUS
-     ===================================================== */
-
-  async function loadWorldGold() {
-
-    const priceElement =
-      document.getElementById("worldGoldPrice");
-
-    const vndElement =
-      document.getElementById("worldGoldVnd");
-
-    const timeElement =
-      document.getElementById("worldGoldTime");
-
-
-    try {
-
-      const response = await fetch(
-        "https://xaus.com/api/v1/spot?compact=1",
-        {
-          cache: "no-store"
-        }
-      );
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          "Không lấy được dữ liệu giá vàng"
-        );
-
-      }
-
-
-      const data = await response.json();
-
-
-      /* Giá vàng thế giới USD/ounce */
-
-      const usdOz = Number(data.spot_usd_oz);
-
-
-      if (!Number.isFinite(usdOz)) {
-
-        throw new Error(
-          "Dữ liệu giá vàng không hợp lệ"
-        );
-
-      }
-
-
-      /* ==========================================
-         HIỂN THỊ USD/OZ
-         ========================================== */
-
-      priceElement.innerHTML =
-        usdOz.toLocaleString("en-US", {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        }) + " USD/oz";
-
-
-      /* ==========================================
-         QUY ĐỔI THAM KHẢO SANG VNĐ/LƯỢNG
-
-         1 troy ounce = 0.829426 lượng
-         => 1 lượng ≈ 1.205653 troy ounce
-
-         Lưu ý:
-         Đây chỉ là quy đổi theo tỷ giá USD/VND,
-         KHÔNG phải giá vàng trong nước.
-         ========================================== */
-
-      const usdVnd = 26000;
-
-      const vndPerLuong =
-        usdOz * 1.205653 * usdVnd;
-
-
-      vndElement.innerHTML =
-        "≈ " +
-        Math.round(vndPerLuong).toLocaleString("vi-VN") +
-        " đ/lượng";
-
-
-      /* ==========================================
-         THỜI GIAN DỮ LIỆU
-         ========================================== */
-
-      if (data.updated_at) {
-
-        const date =
-          new Date(data.updated_at);
-
-        timeElement.innerText =
-          "Dữ liệu quốc tế cập nhật: " +
-          date.toLocaleString("vi-VN");
-
-      } else {
-
-        timeElement.innerText =
-          "Dữ liệu XAU/USD quốc tế";
-
-      }
-
-
-    } catch (error) {
-
-      console.error(
-        "Lỗi giá vàng thế giới:",
-        error
-      );
-
-
-      priceElement.innerHTML =
-        '<span class="error">' +
-        'Không thể tải giá vàng thế giới lúc này' +
-        '</span>';
-
-      vndElement.innerHTML = "";
-
-      timeElement.innerText =
-        "Vui lòng thử tải lại trang sau.";
+      goldChart.destroy();
 
     }
 
+
+    /* ==========================================
+       TẠO BIỂU ĐỒ
+       ========================================== */
+
+    const ctx =
+      document
+        .getElementById("goldChart")
+        .getContext("2d");
+
+
+    goldChart = new Chart(
+      ctx,
+      {
+
+        type: "line",
+
+        data: {
+
+          labels: labels,
+
+          datasets: [
+
+            {
+
+              label: "XAU/USD",
+
+              data: prices,
+
+              borderColor: "#b8962e",
+
+              backgroundColor:
+                "rgba(184,150,46,0.12)",
+
+              borderWidth: 2,
+
+              fill: true,
+
+              tension: 0.25,
+
+              pointRadius: 0,
+
+              pointHoverRadius: 5
+
+            }
+
+          ]
+
+        },
+
+
+        options: {
+
+          responsive: true,
+
+          maintainAspectRatio: false,
+
+
+          interaction: {
+
+            mode: "index",
+
+            intersect: false
+
+          },
+
+
+          plugins: {
+
+            legend: {
+
+              display: true
+
+            },
+
+
+            tooltip: {
+
+              callbacks: {
+
+                label: function(context) {
+
+                  return (
+                    Number(context.raw)
+                      .toLocaleString(
+                        "en-US",
+                        {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                        }
+                      )
+                    + " USD/oz"
+                  );
+
+                }
+
+              }
+
+            }
+
+          },
+
+
+          scales: {
+
+            x: {
+
+              ticks: {
+
+                maxTicksLimit: 12,
+
+                maxRotation: 0
+
+              }
+
+            },
+
+
+            y: {
+
+              ticks: {
+
+                callback: function(value) {
+
+                  return Number(value)
+                    .toLocaleString(
+                      "en-US"
+                    );
+
+                }
+
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+    );
+
+
+    loading.style.display = "none";
+
+    container.style.display = "block";
+
+
+  } catch (err) {
+
+    console.error(
+      "Lỗi biểu đồ:",
+      err
+    );
+
+
+    loading.style.display = "none";
+
+    container.style.display = "none";
+
+    error.style.display = "block";
+
   }
 
+}
 
-  /* =====================================================
-     TẢI GIÁ VÀNG THẾ GIỚI NGAY KHI MỞ TRANG
-     ===================================================== */
+
+/* =====================================================
+   TẢI GIÁ VÀ BIỂU ĐỒ KHI MỞ WEBSITE
+   ===================================================== */
+
+loadWorldGold();
+
+loadGoldChart();
+
+
+/* =====================================================
+   CẬP NHẬT GIÁ VÀNG THẾ GIỚI MỖI 60 GIÂY
+   KHÔNG RELOAD TRANG
+   ===================================================== */
+
+setInterval(function() {
 
   loadWorldGold();
 
-
-  /* =====================================================
-     CẬP NHẬT GIÁ VÀNG THẾ GIỚI MỖI 60 GIÂY
-
-     Không reload toàn bộ trang.
-     ===================================================== */
-
-  setInterval(function() {
-
-    loadWorldGold();
-
-  }, 60000);
+}, 60000);
 
 
-  /* =====================================================
-     QUẢN TRỊ
-     ===================================================== */
+/* =====================================================
+   CẬP NHẬT BIỂU ĐỒ MỖI 5 PHÚT
+   ===================================================== */
 
-  function openAdmin() {
+setInterval(function() {
 
-    const password =
-      prompt("Nhập mật khẩu quản trị:");
+  loadGoldChart();
 
-    /*
-       Bạn có thể đổi mật khẩu tại đây.
-    */
-
-    if (password === "123456") {
-
-      document.querySelector(".admin").style.display =
-        "block";
-
-      alert(
-        "Đã mở khu vực quản trị."
-      );
-
-    } else {
-
-      alert(
-        "Sai mật khẩu!"
-      );
-
-    }
-
-  }
+}, 300000);
 
 
-  /* =====================================================
-     LƯU GIÁ
+/* =====================================================
+   QUẢN TRỊ
+   ===================================================== */
 
-     Lưu ý:
-     GitHub Pages là website tĩnh.
-     Nút này KHÔNG thể tự sửa file trên GitHub.
+function openAdmin() {
 
-     Muốn thay đổi giá chính thức:
-     sửa biến prices ở phía trên rồi Commit changes.
-     ===================================================== */
+  const password =
+    prompt("Nhập mật khẩu quản trị:");
 
-  function savePrices() {
+
+  if (password === "123456") {
+
+    document.querySelector(".admin").style.display =
+      "block";
 
     alert(
-      "Để cập nhật giá chính thức, hãy sửa giá trong phần prices của file HTML rồi Commit changes trên GitHub."
+      "Đã mở khu vực quản trị."
+    );
+
+  } else {
+
+    alert(
+      "Sai mật khẩu!"
     );
 
   }
+
+}
+
+
+/* =====================================================
+   LƯU GIÁ
+
+   GitHub Pages là website tĩnh.
+   Nút này không thể tự Commit code lên GitHub.
+
+   Muốn thay đổi giá:
+   sửa prices ở phía trên
+   rồi Commit changes trên GitHub.
+   ===================================================== */
+
+function savePrices() {
+
+  alert(
+    "Hãy sửa giá trong phần prices của file HTML rồi Commit changes trên GitHub."
+  );
+
+}
 
 </script>
 
 </body>
 </html>
+```
