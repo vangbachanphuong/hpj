@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
 
   <meta charset="UTF-8">
@@ -262,6 +263,22 @@
     }
 
 
+    .tradingview-widget-copyright {
+
+      font-size: 11px;
+      padding: 5px 10px;
+
+    }
+
+
+    .tradingview-widget-copyright a {
+
+      color: #777;
+      text-decoration: none;
+
+    }
+
+
     /* ================================
        GHI CHÚ
        ================================= */
@@ -279,6 +296,13 @@
       border-radius: 6px;
 
       line-height: 1.6;
+
+    }
+
+
+    .note p {
+
+      margin: 5px 0;
 
     }
 
@@ -305,6 +329,14 @@
       margin-top: 30px;
 
       display: none;
+
+      padding: 15px;
+
+      background: #fafafa;
+
+      border: 1px solid #ddd;
+
+      border-radius: 8px;
 
     }
 
@@ -368,6 +400,13 @@
       header h1 {
 
         font-size: 21px;
+
+      }
+
+
+      header p {
+
+        font-size: 14px;
 
       }
 
@@ -533,10 +572,7 @@
         </div>
 
 
-        <div
-          class="tradingview-widget-copyright"
-          style="font-size:11px; padding:5px 10px;">
-
+        <div class="tradingview-widget-copyright">
 
           <a
             href="https://www.tradingview.com/"
@@ -547,7 +583,6 @@
 
           </a>
 
-
         </div>
 
 
@@ -556,56 +591,31 @@
           src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
           async>
 
-
         {
           "autosize": true,
-
           "symbol": "OANDA:XAUUSD",
-
           "interval": "60",
-
           "timezone": "Asia/Ho_Chi_Minh",
-
           "theme": "light",
-
           "style": "1",
-
           "locale": "vi_VN",
-
           "enable_publishing": false,
-
           "hide_top_toolbar": false,
-
           "hide_legend": false,
-
           "hide_side_toolbar": false,
-
           "allow_symbol_change": false,
-
           "save_image": false,
-
           "calendar": false,
-
           "withdateranges": true,
-
           "details": false,
-
           "hotlist": false,
-
           "show_popup_button": true,
-
           "popup_width": "1000",
-
           "popup_height": "650",
-
           "support_host": "https://www.tradingview.com",
-
           "backgroundColor": "#ffffff",
-
           "gridColor": "rgba(184,150,46,0.10)"
-
         }
-
 
         </script>
 
@@ -716,7 +726,8 @@
 
   © 2026 Vàng Bạc Hàn Phương
 
-  <br><br>
+  <br>
+  <br>
 
   <button onclick="openAdmin()">
 
@@ -789,11 +800,8 @@ const updateTime =
 
 function render() {
 
-
   const table =
-    document.getElementById(
-      "priceTable"
-    );
+    document.getElementById("priceTable");
 
 
   table.innerHTML = "";
@@ -801,28 +809,39 @@ function render() {
 
   prices.forEach(function(p) {
 
+    const row =
+      document.createElement("tr");
 
-    table.innerHTML += `
 
-      <tr>
+    const nameCell =
+      document.createElement("td");
 
-        <td>
-          ${p.name}
-        </td>
+    nameCell.innerText =
+      p.name;
 
-        <td>
-          ${Number(p.buy)
-            .toLocaleString("vi-VN")} đ
-        </td>
 
-        <td>
-          ${Number(p.sell)
-            .toLocaleString("vi-VN")} đ
-        </td>
+    const buyCell =
+      document.createElement("td");
 
-      </tr>
+    buyCell.innerText =
+      Number(p.buy).toLocaleString("vi-VN") + " đ";
 
-    `;
+
+    const sellCell =
+      document.createElement("td");
+
+    sellCell.innerText =
+      Number(p.sell).toLocaleString("vi-VN") + " đ";
+
+
+    row.appendChild(nameCell);
+
+    row.appendChild(buyCell);
+
+    row.appendChild(sellCell);
+
+
+    table.appendChild(row);
 
   });
 
@@ -840,25 +859,38 @@ render();
 
 
 /* =====================================================
-   GIÁ VÀNG THẾ GIỚI
+   GIÁ VÀNG THẾ GIỚI XAU/USD
 
-   Phần này lấy giá tham khảo để hiển thị
-   bên trên biểu đồ.
-
-   Biểu đồ chính sử dụng TradingView.
+   API XAUS
    ===================================================== */
 
 async function loadWorldGold() {
 
+  const priceElement =
+    document.getElementById("xauPrice");
+
+  const changeElement =
+    document.getElementById("xauChange");
+
+  const updateElement =
+    document.getElementById("xauUpdate");
+
 
   try {
+
+    priceElement.innerText =
+      "Đang tải...";
 
 
     const response =
       await fetch(
         "https://xaus.com/api/v1/spot?currency=USD&unit=oz",
         {
-          cache: "no-store"
+          method: "GET",
+          cache: "no-store",
+          headers: {
+            "Accept": "application/json"
+          }
         }
       );
 
@@ -866,7 +898,7 @@ async function loadWorldGold() {
     if (!response.ok) {
 
       throw new Error(
-        "Không lấy được dữ liệu"
+        "API HTTP " + response.status
       );
 
     }
@@ -876,6 +908,16 @@ async function loadWorldGold() {
       await response.json();
 
 
+    console.log(
+      "Dữ liệu XAU/USD:",
+      data
+    );
+
+
+    /* ==============================
+       LẤY GIÁ
+       ============================== */
+
     const price =
       Number(data.spot_usd_oz);
 
@@ -883,66 +925,86 @@ async function loadWorldGold() {
     if (!Number.isFinite(price)) {
 
       throw new Error(
-        "Giá không hợp lệ"
+        "Không tìm thấy spot_usd_oz"
       );
 
     }
 
 
-    document.getElementById(
-      "xauPrice"
-    ).innerText =
-
+    priceElement.innerText =
       price.toLocaleString(
         "en-US",
         {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2
         }
-      )
-
-      + " USD/oz";
+      ) + " USD/oz";
 
 
+    /* ==============================
+       XÓA THAY ĐỔI
+       ============================== */
 
-    /* ==========================================
+    changeElement.innerText = "";
+
+    changeElement.className =
+      "xau-change";
+
+
+    /* ==============================
        THỜI GIAN
-       ========================================== */
+       ============================== */
+
+    let date = null;
+
 
     if (data.price_as_of) {
 
-
-      const date =
+      date =
         new Date(
           data.price_as_of
         );
 
+    }
 
-      document.getElementById(
-        "xauUpdate"
-      ).innerText =
+    else if (data.updated_at) {
 
-        "Cập nhật: " +
-        date.toLocaleString(
-          "vi-VN"
+      date =
+        new Date(
+          data.updated_at
         );
-
-
-    } else {
-
-
-      document.getElementById(
-        "xauUpdate"
-      ).innerText =
-        "Giá vàng quốc tế XAU/USD";
 
     }
 
 
+    if (
+      date &&
+      !isNaN(date.getTime())
+    ) {
+
+      updateElement.innerText =
+        "Cập nhật: " +
+        date.toLocaleString(
+          "vi-VN",
+          {
+            timeZone:
+              "Asia/Ho_Chi_Minh"
+          }
+        );
+
+    }
+
+    else {
+
+      updateElement.innerText =
+        "Giá vàng quốc tế XAU/USD";
+
+    }
+
   }
 
-  catch (error) {
 
+  catch (error) {
 
     console.error(
       "Lỗi XAU/USD:",
@@ -950,16 +1012,16 @@ async function loadWorldGold() {
     );
 
 
-    document.getElementById(
-      "xauPrice"
-    ).innerText =
+    priceElement.innerText =
       "Không thể tải giá";
 
 
-    document.getElementById(
-      "xauUpdate"
-    ).innerText =
-      "Vui lòng thử lại sau.";
+    changeElement.innerText =
+      "";
+
+
+    updateElement.innerText =
+      "Không lấy được dữ liệu giá vàng thế giới.";
 
   }
 
@@ -968,7 +1030,7 @@ async function loadWorldGold() {
 
 
 /* =====================================================
-   TẢI GIÁ VÀNG THẾ GIỚI
+   TẢI GIÁ VÀNG THẾ GIỚI NGAY KHI MỞ TRANG
    ===================================================== */
 
 loadWorldGold();
@@ -976,9 +1038,7 @@ loadWorldGold();
 
 
 /* =====================================================
-   CẬP NHẬT GIÁ MỖI 60 GIÂY
-
-   KHÔNG RELOAD TRANG.
+   CẬP NHẬT GIÁ THẾ GIỚI MỖI 60 GIÂY
    ===================================================== */
 
 setInterval(
@@ -994,7 +1054,6 @@ setInterval(
 
 function openAdmin() {
 
-
   const password =
     prompt(
       "Nhập mật khẩu quản trị:"
@@ -1004,7 +1063,6 @@ function openAdmin() {
   if (
     password === "Hoa210700@"
   ) {
-
 
     document.querySelector(
       ".admin"
@@ -1016,9 +1074,9 @@ function openAdmin() {
       "Đã mở khu vực quản trị."
     );
 
+  }
 
-  } else {
-
+  else {
 
     alert(
       "Sai mật khẩu!"
@@ -1032,22 +1090,12 @@ function openAdmin() {
 
 /* =====================================================
    LƯU GIÁ
-
-   GitHub Pages không thể tự Commit
-   file HTML từ trình duyệt.
-
-   Muốn thay đổi giá chính thức:
-   sửa phần prices ở trên
-   rồi Commit changes trên GitHub.
    ===================================================== */
 
 function savePrices() {
 
-
   alert(
-
     "Hãy sửa giá trong phần prices của file HTML rồi Commit changes trên GitHub."
-
   );
 
 }
@@ -1056,4 +1104,5 @@ function savePrices() {
 
 
 </body>
+
 </html>
