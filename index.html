@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <html lang="vi">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +11,6 @@
 <title>Vàng Bạc Hàn Phương - Bảng Giá Vàng</title>
 
 <style>
-
 *{
   box-sizing:border-box;
 }
@@ -230,7 +227,6 @@ footer{
    ========================= */
 
 @media(max-width:600px){
-
   .container{
     margin:10px;
     padding:15px;
@@ -252,608 +248,231 @@ footer{
   .chart-wrapper{
     height:430px;
   }
-
 }
-
 </style>
-
 </head>
 
 <body>
 
 <header>
-
-<h1>VÀNG BẠC HÀN PHƯƠNG-HPJ</h1>
-
-<p>Cập nhật giá vàng nhanh chóng - chính xác</p>
-
+  <h1>VÀNG BẠC HÀN PHƯƠNG-HPJ</h1>
+  <p>Cập nhật giá vàng nhanh chóng - chính xác</p>
 </header>
 
 <div class="container">
+  <h2>Bảng Giá Vàng Hôm Nay</h2>
+  <p id="updateTime"></p>
 
-<h2>Bảng Giá Vàng Hôm Nay</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Loại vàng</th>
+        <th>Mua vào</th>
+        <th>Bán ra</th>
+      </tr>
+    </thead>
+    <tbody id="priceTable"></tbody>
+  </table>
 
-<p id="updateTime"></p>
+  <!-- =========================
+       GIÁ VÀNG THẾ GIỚI
+       ========================= -->
+  <div class="world-box">
+    <div class="world-title">
+      <h2>🌎 Giá vàng thế giới</h2>
+      <div class="world-subtitle">
+        XAU/USD - Giá vàng giao ngay quốc tế
+      </div>
+    </div>
 
-<table>
+    <div class="world-price">
+      <div id="xauPrice" class="xau-price">Đang tải giá...</div>
+      <div id="xauChange" class="xau-change">Đang tải...</div>
+      <div id="xauUpdate" class="xau-update">Đang kết nối dữ liệu quốc tế...</div>
+    </div>
 
-<thead>
+    <!-- =========================
+         BIỂU ĐỒ TRADINGVIEW
+         ========================= -->
+    <div class="chart-wrapper">
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <div class="tradingview-widget-copyright">
+          <a href="https://www.tradingview.com/" target="_blank" rel="noopener nofollow">
+            Theo dõi thị trường trên TradingView
+          </a>
+        </div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+        {
+          "autosize": true,
+          "symbol": "OANDA:XAUUSD",
+          "interval": "60",
+          "timezone": "Asia/Ho_Chi_Minh",
+          "theme": "light",
+          "style": "1",
+          "locale": "vi_VN",
+          "enable_publishing": false,
+          "hide_top_toolbar": false,
+          "hide_legend": false,
+          "hide_side_toolbar": false,
+          "allow_symbol_change": false,
+          "save_image": false,
+          "calendar": false,
+          "withdateranges": true,
+          "details": false,
+          "hotlist": false,
+          "show_popup_button": true,
+          "popup_width": "1000",
+          "popup_height": "650",
+          "support_host": "https://www.tradingview.com"
+        }
+        </script>
+      </div>
+    </div>
+  </div>
 
-<tr>
-<th>Loại vàng</th>
-<th>Mua vào</th>
-<th>Bán ra</th>
-</tr>
+  <!-- =========================
+       GHI CHÚ
+       ========================= -->
+  <div class="note">
+    <p>📍 Giá được cập nhật hàng ngày lúc 09h00 sáng</p>
+    <p>📍 Giá có thể thay đổi theo biến động thị trường</p>
+    <p>📍 Vui lòng liên hệ trực tiếp để có giá chính xác tại thời điểm giao dịch</p>
+    <p>📍 Giá vàng thế giới XAU/USD chỉ mang tính tham khảo</p>
+  </div>
 
-</thead>
+  <!-- =========================
+       LIÊN HỆ
+       ========================= -->
+  <div class="info">
+    <h3>Liên hệ</h3>
+    <p>Hotline/Zalo: 0379869169 - 0962358628</p>
+    <p>Cơ sở 1: Số 12 Vĩnh Tuy - Hai Bà Trưng - Hà Nội</p>
+    <p>Cơ sở 2: Số 358 Khu phố 8 - Thị trấn Mường Tè - Lai Châu</p>
+  </div>
 
-<tbody id="priceTable"></tbody>
-
-</table>
-
-<!-- =========================
-     GIÁ VÀNG THẾ GIỚI
-     ========================= -->
-
-<div class="world-box">
-
-<div class="world-title">
-
-<h2>🌎 Giá vàng thế giới</h2>
-
-<div class="world-subtitle">
-XAU/USD - Giá vàng giao ngay quốc tế
-</div>
-
-</div>
-
-<div class="world-price">
-
-<div id="xauPrice" class="xau-price">
-Đang tải giá...
-</div>
-
-<div id="xauChange" class="xau-change">
-Đang tải...
-</div>
-
-<div id="xauUpdate" class="xau-update">
-Đang kết nối Giavang.org...
-</div>
-
-</div>
-
-<!-- =========================
-     BIỂU ĐỒ TRADINGVIEW
-     ========================= -->
-
-<div class="chart-wrapper">
-
-<div class="tradingview-widget-container">
-
-<div class="tradingview-widget-container__widget"></div>
-
-<div class="tradingview-widget-copyright">
-
-<a
-href="https://www.tradingview.com/"
-target="_blank"
-rel="noopener nofollow">
-
-Theo dõi thị trường trên TradingView
-
-</a>
-
-</div>
-
-<script
-type="text/javascript"
-src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
-async>
-
-{
-  "autosize": true,
-  "symbol": "OANDA:XAUUSD",
-  "interval": "60",
-  "timezone": "Asia/Ho_Chi_Minh",
-  "theme": "light",
-  "style": "1",
-  "locale": "vi_VN",
-  "enable_publishing": false,
-  "hide_top_toolbar": false,
-  "hide_legend": false,
-  "hide_side_toolbar": false,
-  "allow_symbol_change": false,
-  "save_image": false,
-  "calendar": false,
-  "withdateranges": true,
-  "details": false,
-  "hotlist": false,
-  "show_popup_button": true,
-  "popup_width": "1000",
-  "popup_height": "650",
-  "support_host": "https://www.tradingview.com"
-}
-
-</script>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- =========================
-     GHI CHÚ
-     ========================= -->
-
-<div class="note">
-
-<p>📍 Giá được cập nhật hàng ngày lúc 09h00 sáng</p>
-
-<p>📍 Giá có thể thay đổi theo biến động thị trường</p>
-
-<p>📍 Vui lòng liên hệ trực tiếp để có giá chính xác tại thời điểm giao dịch</p>
-
-<p>📍 Giá vàng thế giới XAU/USD chỉ mang tính tham khảo</p>
-
-<p>📍 Giá thế giới được lấy từ Giavang.org</p>
-
-</div>
-
-<!-- =========================
-     LIÊN HỆ
-     ========================= -->
-
-<div class="info">
-
-<h3>Liên hệ</h3>
-
-<p>
-Hotline/Zalo:
-0379869169 - 0962358628
-</p>
-
-<p>
-Cơ sở 1:
-Số 12 Vĩnh Tuy - Hai Bà Trưng - Hà Nội
-</p>
-
-<p>
-Cơ sở 2:
-Số 358 Khu phố 8 - Thị trấn Mường Tè - Lai Châu
-</p>
-
-</div>
-
-<!-- =========================
-     ADMIN
-     ========================= -->
-
-<div class="admin">
-
-<h3>Trang cập nhật giá (chỉ chủ cửa hàng)</h3>
-
-<div id="adminInputs"></div>
-
-<br>
-
-<button onclick="savePrices()">
-Lưu giá mới
-</button>
-
-</div>
-
+  <!-- =========================
+       ADMIN
+       ========================= -->
+  <div class="admin">
+    <h3>Trang cập nhật giá (chỉ chủ cửa hàng)</h3>
+    <div id="adminInputs"></div>
+    <br>
+    <button onclick="savePrices()">Lưu giá mới</button>
+  </div>
 </div>
 
 <footer>
-
-© 2026 Vàng Bạc Hàn Phương
-
-<br><br>
-
-<button onclick="openAdmin()">
-Quản trị
-</button>
-
+  © 2026 Vàng Bạc Hàn Phương
+  <br><br>
+  <button onclick="openAdmin()">Quản trị</button>
 </footer>
 
 <script>
-
 /* =====================================================
    GIÁ HÀN PHƯƠNG
    ===================================================== */
-
 const prices = [
-
-{
-  name:"Nhẫn Tròn Trơn 24K",
-  buy:13600000,
-  sell:13900000
-},
-
-{
-  name:"Nhẫn Ép Vỉ 99.99",
-  buy:13700000,
-  sell:14000000
-},
-
-{
-  name:"Vàng trang sức 99.7",
-  buy:13500000,
-  sell:13850000
-},
-
-{
-  name:"Vàng tây 10K",
-  buy:5300000,
-  sell:6400000
-}
-
+  { name: "Nhẫn Tròn Trơn 24K", buy: 13600000, sell: 13900000 },
+  { name: "Nhẫn Ép Vỉ 99.99", buy: 13700000, sell: 14000000 },
+  { name: "Vàng trang sức 99.7", buy: 13500000, sell: 13850000 },
+  { name: "Vàng tây 10K", buy: 5300000, sell: 6400000 }
 ];
-
-
-/* =====================================================
-   THỜI GIAN CẬP NHẬT HÀN PHƯƠNG
-   ===================================================== */
 
 const updateTime = "01/09/2026 08:57:35";
 
-
-/* =====================================================
-   HIỂN THỊ BẢNG
-   ===================================================== */
-
 function render(){
-
-  const table =
-    document.getElementById("priceTable");
-
+  const table = document.getElementById("priceTable");
   table.innerHTML = "";
 
   prices.forEach(function(p){
+    const row = document.createElement("tr");
 
-    const row =
-      document.createElement("tr");
+    const nameCell = document.createElement("td");
+    nameCell.innerText = p.name;
 
-    const nameCell =
-      document.createElement("td");
+    const buyCell = document.createElement("td");
+    buyCell.innerText = Number(p.buy).toLocaleString("vi-VN") + " đ";
 
-    nameCell.innerText =
-      p.name;
-
-    const buyCell =
-      document.createElement("td");
-
-    buyCell.innerText =
-      Number(p.buy).toLocaleString("vi-VN") + " đ";
-
-    const sellCell =
-      document.createElement("td");
-
-    sellCell.innerText =
-      Number(p.sell).toLocaleString("vi-VN") + " đ";
+    const sellCell = document.createElement("td");
+    sellCell.innerText = Number(p.sell).toLocaleString("vi-VN") + " đ";
 
     row.appendChild(nameCell);
     row.appendChild(buyCell);
     row.appendChild(sellCell);
 
     table.appendChild(row);
-
   });
 
-  document.getElementById("updateTime").innerText =
-    "Cập nhật lúc: " + updateTime;
-
+  document.getElementById("updateTime").innerText = "Cập nhật lúc: " + updateTime;
 }
 
 render();
 
-
 /* =====================================================
-   GIÁ VÀNG THẾ GIỚI
-   =====================================================
-
-   QUAN TRỌNG:
-   SAU KHI TẠO CLOUDFLARE WORKER,
-   THAY URL BÊN DƯỚI BẰNG URL WORKER CỦA BẠN.
+   GIÁ VÀNG THẾ GIỚI (LẤY TRỰC TIẾP TỪ NGUỒN CÔNG KHAI)
    ===================================================== */
+async function loadWorldGold(){
+  const priceElement = document.getElementById("xauPrice");
+  const changeElement = document.getElementById("xauChange");
+  const updateElement = document.getElementById("xauUpdate");
 
-const WORLD_GOLD_API =
-  "https://YOUR-WORKER-NAME.YOUR-SUBDOMAIN.workers.dev";
+  try {
+    const res = await fetch("https://api.binance.com/api/v3/ticker/24hr?symbol=PAXGUSDT");
+    if(!res.ok) throw new Error("Lỗi tải dữ liệu");
 
+    const data = await res.json();
+    
+    const currentPrice = parseFloat(data.lastPrice);
+    const priceChange = parseFloat(data.priceChange);
+    const percentChange = parseFloat(data.priceChangePercent);
 
-let previousWorldPrice = null;
-
-
-/* =====================================================
-   HIỂN THỊ GIÁ THẾ GIỚI
-   ===================================================== */
-
-function showWorldGold(data){
-
-  const priceElement =
-    document.getElementById("xauPrice");
-
-  const changeElement =
-    document.getElementById("xauChange");
-
-  const updateElement =
-    document.getElementById("xauUpdate");
-
-
-  const price =
-    Number(data.price);
-
-
-  if(!Number.isFinite(price)){
-
-    throw new Error("Giá XAU không hợp lệ");
-
-  }
-
-
-  /* GIÁ */
-
-  priceElement.innerText =
-    price.toLocaleString("en-US",{
-      minimumFractionDigits:2,
-      maximumFractionDigits:2
+    priceElement.innerText = currentPrice.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
     }) + " USD/oz";
 
-
-  /* TĂNG GIẢM */
-
-  if(
-    data.change !== null &&
-    data.change !== undefined &&
-    Number.isFinite(Number(data.change))
-  ){
-
-    const change =
-      Number(data.change);
-
-    const percent =
-      Number(data.percent);
-
-
-    if(change > 0){
-
-      changeElement.innerText =
-        "▲ +" +
-        change.toFixed(2) +
-        " USD (" +
-        (Number.isFinite(percent)
-          ? "+" + percent.toFixed(2)
-          : "") +
-        "%)";
-
-      changeElement.className =
-        "xau-change up";
-
+    if (priceChange > 0) {
+      changeElement.innerText = `▲ +${priceChange.toFixed(2)} USD (+${percentChange.toFixed(2)}%)`;
+      changeElement.className = "xau-change up";
+    } else if (priceChange < 0) {
+      changeElement.innerText = `▼ ${priceChange.toFixed(2)} USD (${percentChange.toFixed(2)}%)`;
+      changeElement.className = "xau-change down";
+    } else {
+      changeElement.innerText = "● Không thay đổi";
+      changeElement.className = "xau-change same";
     }
 
-    else if(change < 0){
+    const now = new Date();
+    updateElement.innerText = "Nguồn: Quốc tế • Cập nhật: " + now.toLocaleTimeString("vi-VN");
 
-      changeElement.innerText =
-        "▼ " +
-        change.toFixed(2) +
-        " USD (" +
-        (Number.isFinite(percent)
-          ? percent.toFixed(2)
-          : "") +
-        "%)";
-
-      changeElement.className =
-        "xau-change down";
-
-    }
-
-    else{
-
-      changeElement.innerText =
-        "● Không thay đổi";
-
-      changeElement.className =
-        "xau-change same";
-
-    }
-
+  } catch (error) {
+    console.error("Lỗi:", error);
+    priceElement.innerText = "Không thể tải giá";
+    changeElement.innerText = "";
+    updateElement.innerText = "Lỗi kết nối dữ liệu";
   }
-
-  else{
-
-    changeElement.innerText =
-      "XAU/USD";
-
-    changeElement.className =
-      "xau-change";
-
-  }
-
-
-  /* THỜI GIAN */
-
-  if(data.updatedAt){
-
-    updateElement.innerText =
-      "Nguồn: Giavang.org • Cập nhật: " +
-      data.updatedAt;
-
-  }
-
-  else{
-
-    updateElement.innerText =
-      "Nguồn: Giavang.org";
-
-  }
-
-
-  previousWorldPrice =
-    price;
-
 }
-
-
-/* =====================================================
-   TẢI GIÁ TỪ PROXY
-   ===================================================== */
-
-async function loadWorldGold(){
-
-  const priceElement =
-    document.getElementById("xauPrice");
-
-  const changeElement =
-    document.getElementById("xauChange");
-
-  const updateElement =
-    document.getElementById("xauUpdate");
-
-
-  try{
-
-    priceElement.innerText =
-      "Đang tải giá...";
-
-    changeElement.innerText =
-      "";
-
-    updateElement.innerText =
-      "Đang kết nối Giavang.org...";
-
-
-    const response =
-      await fetch(
-        WORLD_GOLD_API +
-        "?t=" +
-        Date.now(),
-        {
-          method:"GET",
-          cache:"no-store"
-        }
-      );
-
-
-    if(!response.ok){
-
-      throw new Error(
-        "Proxy HTTP " +
-        response.status
-      );
-
-    }
-
-
-    const data =
-      await response.json();
-
-
-    console.log(
-      "GIAVANG.ORG DATA:",
-      data
-    );
-
-
-    if(!data.success){
-
-      throw new Error(
-        data.error ||
-        "Proxy không trả về dữ liệu"
-      );
-
-    }
-
-
-    showWorldGold(data);
-
-  }
-
-  catch(error){
-
-    console.error(
-      "LỖI GIÁ VÀNG THẾ GIỚI:",
-      error
-    );
-
-
-    priceElement.innerText =
-      "Không thể tải giá";
-
-
-    changeElement.innerText =
-      "";
-
-
-    updateElement.innerText =
-      "Không kết nối được dữ liệu Giavang.org";
-
-  }
-
-}
-
-
-/* =====================================================
-   TẢI NGAY
-   ===================================================== */
 
 loadWorldGold();
-
-
-/* =====================================================
-   TỰ ĐỘNG CẬP NHẬT 60 GIÂY
-   ===================================================== */
-
-setInterval(
-  loadWorldGold,
-  60000
-);
-
+setInterval(loadWorldGold, 30000);
 
 /* =====================================================
    QUẢN TRỊ
    ===================================================== */
-
 function openAdmin(){
-
-  const password =
-    prompt("Nhập mật khẩu quản trị:");
-
+  const password = prompt("Nhập mật khẩu quản trị:");
   if(password === "Hoa210700@"){
-
-    document.querySelector(".admin").style.display =
-      "block";
-
-    alert(
-      "Đã mở khu vực quản trị."
-    );
-
+    document.querySelector(".admin").style.display = "block";
+    alert("Đã mở khu vực quản trị.");
+  } else {
+    alert("Sai mật khẩu!");
   }
-
-  else{
-
-    alert(
-      "Sai mật khẩu!"
-    );
-
-  }
-
 }
-
-
-/* =====================================================
-   LƯU GIÁ
-   ===================================================== */
 
 function savePrices(){
-
-  alert(
-    "Hãy sửa giá trong phần prices của file HTML rồi Commit changes trên GitHub."
-  );
-
+  alert("Hãy sửa giá trong phần prices của file HTML rồi Commit changes trên GitHub.");
 }
-
 </script>
 
 </body>
