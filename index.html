@@ -18,7 +18,9 @@
   <meta http-equiv="Expires"
         content="0">
 
-  <title>Vàng Bạc Hàn Phương - Bảng Giá Vàng</title>
+  <title>
+    Vàng Bạc Hàn Phương - Bảng Giá Vàng
+  </title>
 
 
   <style>
@@ -27,12 +29,14 @@
       box-sizing: border-box;
     }
 
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       background: #f5f5f5;
       color: #333;
     }
+
 
     /* ================================
        HEADER
@@ -45,14 +49,17 @@
       padding: 20px;
     }
 
+
     header h1 {
       margin: 0;
       font-size: 27px;
     }
 
+
     header p {
       margin-bottom: 0;
     }
+
 
     /* ================================
        CONTAINER
@@ -67,14 +74,16 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
+
     /* ================================
-       BẢNG GIÁ
+       BẢNG GIÁ HÀN PHƯƠNG
        ================================ */
 
     table {
       width: 100%;
       border-collapse: collapse;
     }
+
 
     th,
     td {
@@ -83,22 +92,30 @@
       text-align: center;
     }
 
+
     th {
       background: #f0e6c0;
       color: #5d4810;
     }
 
+
     tr:hover {
       background: #fffdf4;
     }
+
+
+    /* ================================
+       THỜI GIAN CẬP NHẬT
+       ================================ */
 
     #updateTime {
       color: #666;
       font-size: 14px;
     }
 
+
     /* ================================
-       GIÁ VÀNG THẾ GIỚI
+       KHUNG GIÁ VÀNG THẾ GIỚI
        ================================ */
 
     .world-box {
@@ -109,11 +126,13 @@
       background: #fff;
     }
 
+
     .world-title {
       background: #f7f0d7;
       padding: 15px;
       border-bottom: 1px solid #ddd;
     }
+
 
     .world-title h2 {
       margin: 0;
@@ -121,14 +140,16 @@
       font-size: 21px;
     }
 
+
     .world-subtitle {
       margin-top: 5px;
       color: #777;
       font-size: 13px;
     }
 
+
     /* ================================
-       XAU/USD
+       GIÁ XAU/USD
        ================================ */
 
     .world-price {
@@ -136,11 +157,13 @@
       text-align: center;
     }
 
+
     .xau-price {
       font-size: 32px;
       font-weight: bold;
       color: #222;
     }
+
 
     .xau-change {
       margin-top: 7px;
@@ -148,19 +171,23 @@
       font-weight: bold;
     }
 
+
     .xau-change.up {
       color: #16803c;
     }
 
+
     .xau-change.down {
       color: #c62828;
     }
+
 
     .xau-update {
       margin-top: 8px;
       color: #777;
       font-size: 13px;
     }
+
 
     /* ================================
        BIỂU ĐỒ TRADINGVIEW
@@ -173,25 +200,24 @@
       background: white;
     }
 
+
     .tradingview-widget-container {
       width: 100%;
       height: 100%;
     }
+
 
     .tradingview-widget-container__widget {
       width: 100%;
       height: 100%;
     }
 
+
     .tradingview-widget-copyright {
       font-size: 11px;
       padding: 5px 10px;
     }
 
-    .tradingview-widget-copyright a {
-      color: #777;
-      text-decoration: none;
-    }
 
     /* ================================
        GHI CHÚ
@@ -206,9 +232,11 @@
       line-height: 1.6;
     }
 
+
     .note p {
       margin: 5px 0;
     }
+
 
     /* ================================
        LIÊN HỆ
@@ -219,6 +247,7 @@
       line-height: 1.6;
     }
 
+
     /* ================================
        ADMIN
        ================================ */
@@ -226,11 +255,8 @@
     .admin {
       margin-top: 30px;
       display: none;
-      padding: 15px;
-      background: #fafafa;
-      border: 1px solid #ddd;
-      border-radius: 8px;
     }
+
 
     button {
       padding: 9px 16px;
@@ -241,9 +267,11 @@
       cursor: pointer;
     }
 
+
     button:hover {
       background: #967a24;
     }
+
 
     /* ================================
        FOOTER
@@ -256,6 +284,7 @@
       padding-bottom: 25px;
     }
 
+
     /* ================================
        MOBILE
        ================================ */
@@ -267,13 +296,11 @@
         padding: 15px;
       }
 
+
       header h1 {
         font-size: 21px;
       }
 
-      header p {
-        font-size: 14px;
-      }
 
       th,
       td {
@@ -281,9 +308,11 @@
         font-size: 13px;
       }
 
+
       .xau-price {
         font-size: 26px;
       }
+
 
       .chart-wrapper {
         height: 430px;
@@ -316,6 +345,7 @@
 </header>
 
 
+
 <div class="container">
 
 
@@ -326,6 +356,7 @@
   <h2>
     Bảng Giá Vàng Hôm Nay
   </h2>
+
 
   <p id="updateTime"></p>
 
@@ -352,6 +383,7 @@
 
     </thead>
 
+
     <tbody id="priceTable"></tbody>
 
   </table>
@@ -371,6 +403,7 @@
         🌎 Giá vàng thế giới
       </h2>
 
+
       <div class="world-subtitle">
         XAU/USD - Giá vàng giao ngay quốc tế
       </div>
@@ -378,9 +411,11 @@
     </div>
 
 
+
     <!-- GIÁ HIỆN TẠI -->
 
     <div class="world-price">
+
 
       <div
         id="xauPrice"
@@ -406,7 +441,9 @@
 
       </div>
 
+
     </div>
+
 
 
     <!-- ======================================
@@ -415,12 +452,18 @@
 
     <div class="chart-wrapper">
 
-      <div class="tradingview-widget-container">
 
-        <div class="tradingview-widget-container__widget"></div>
+      <div
+        class="tradingview-widget-container">
 
 
-        <div class="tradingview-widget-copyright">
+        <div
+          class="tradingview-widget-container__widget">
+        </div>
+
+
+        <div
+          class="tradingview-widget-copyright">
 
           <a
             href="https://www.tradingview.com/"
@@ -432,6 +475,7 @@
           </a>
 
         </div>
+
 
 
         <script
@@ -467,9 +511,11 @@
 
         </script>
 
+
       </div>
 
     </div>
+
 
   </div>
 
@@ -511,15 +557,18 @@
       Liên hệ
     </h3>
 
+
     <p>
       Hotline/Zalo:
       0379869169 - 0962358628
     </p>
 
+
     <p>
       Cơ sở 1:
       Số 12 Vĩnh Tuy - Hai Bà Trưng - Hà Nội
     </p>
+
 
     <p>
       Cơ sở 2:
@@ -541,9 +590,12 @@
       (chỉ chủ cửa hàng)
     </h3>
 
+
     <div id="adminInputs"></div>
 
+
     <br>
+
 
     <button onclick="savePrices()">
       Lưu giá mới
@@ -590,17 +642,20 @@ const prices = [
     sell: 13900000
   },
 
+
   {
     name: "Nhẫn Ép Vỉ 99.99",
     buy: 13700000,
     sell: 14000000
   },
 
+
   {
     name: "Vàng trang sức 99.7",
     buy: 13500000,
     sell: 13850000
   },
+
 
   {
     name: "Vàng tây 10K",
@@ -611,12 +666,14 @@ const prices = [
 ];
 
 
+
 /* =====================================================
    THỜI GIAN CẬP NHẬT GIÁ HÀN PHƯƠNG
    ===================================================== */
 
 const updateTime =
   "31/08/2026 18:57:35";
+
 
 
 /* =====================================================
@@ -626,14 +683,19 @@ const updateTime =
 function render() {
 
   const table =
-    document.getElementById("priceTable");
+    document.getElementById(
+      "priceTable"
+    );
+
 
   table.innerHTML = "";
+
 
   prices.forEach(function(p) {
 
     const row =
       document.createElement("tr");
+
 
     const nameCell =
       document.createElement("td");
@@ -641,21 +703,27 @@ function render() {
     nameCell.innerText =
       p.name;
 
+
     const buyCell =
       document.createElement("td");
 
     buyCell.innerText =
-      Number(p.buy).toLocaleString("vi-VN") + " đ";
+      Number(p.buy).toLocaleString("vi-VN") +
+      " đ";
+
 
     const sellCell =
       document.createElement("td");
 
     sellCell.innerText =
-      Number(p.sell).toLocaleString("vi-VN") + " đ";
+      Number(p.sell).toLocaleString("vi-VN") +
+      " đ";
+
 
     row.appendChild(nameCell);
     row.appendChild(buyCell);
     row.appendChild(sellCell);
+
 
     table.appendChild(row);
 
@@ -665,7 +733,8 @@ function render() {
   document.getElementById(
     "updateTime"
   ).innerText =
-    "Cập nhật lúc: " + updateTime;
+    "Cập nhật lúc: " +
+    updateTime;
 
 }
 
@@ -676,45 +745,61 @@ render();
 
 /* =====================================================
    GIÁ VÀNG THẾ GIỚI XAU/USD
-   GOLDPRICE.DEV
+   SỬ DỤNG XAUS.COM
    ===================================================== */
 
 let lastWorldGoldPrice = null;
 
 
+
 /* =====================================================
-   HÀM HIỂN THỊ GIÁ
+   HIỂN THỊ GIÁ VÀNG THẾ GIỚI
    ===================================================== */
 
 function showWorldGold(
   price,
-  computedAt,
-  isStale
+  updatedAt,
+  dataStatus
 ) {
 
   const priceElement =
-    document.getElementById("xauPrice");
+    document.getElementById(
+      "xauPrice"
+    );
+
 
   const changeElement =
-    document.getElementById("xauChange");
+    document.getElementById(
+      "xauChange"
+    );
+
 
   const updateElement =
-    document.getElementById("xauUpdate");
+    document.getElementById(
+      "xauUpdate"
+    );
 
 
-  /* HIỂN THỊ GIÁ */
+
+  /* ================================
+     GIÁ
+     ================================ */
 
   priceElement.innerText =
-    price.toLocaleString(
+    Number(price).toLocaleString(
       "en-US",
       {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       }
-    ) + " USD/oz";
+    ) +
+    " USD/oz";
 
 
-  /* TĂNG / GIẢM */
+
+  /* ================================
+     TĂNG / GIẢM
+     ================================ */
 
   if (
     lastWorldGoldPrice !== null
@@ -729,7 +814,8 @@ function showWorldGold(
       (
         difference /
         lastWorldGoldPrice
-      ) * 100;
+      ) *
+      100;
 
 
     if (difference > 0) {
@@ -741,10 +827,12 @@ function showWorldGold(
         percent.toFixed(2) +
         "%)";
 
+
       changeElement.className =
         "xau-change up";
 
     }
+
 
     else if (difference < 0) {
 
@@ -755,15 +843,18 @@ function showWorldGold(
         Math.abs(percent).toFixed(2) +
         "%)";
 
+
       changeElement.className =
         "xau-change down";
 
     }
 
+
     else {
 
       changeElement.innerText =
         "● Không thay đổi";
+
 
       changeElement.className =
         "xau-change";
@@ -772,10 +863,12 @@ function showWorldGold(
 
   }
 
+
   else {
 
     changeElement.innerText =
       "XAU/USD";
+
 
     changeElement.className =
       "xau-change";
@@ -783,16 +876,20 @@ function showWorldGold(
   }
 
 
+
   lastWorldGoldPrice =
     price;
 
 
-  /* THỜI GIAN */
 
-  if (computedAt) {
+  /* ================================
+     THỜI GIAN
+     ================================ */
+
+  if (updatedAt) {
 
     const date =
-      new Date(computedAt);
+      new Date(updatedAt);
 
 
     if (
@@ -830,12 +927,17 @@ function showWorldGold(
   }
 
 
-  /* DỮ LIỆU CŨ */
 
-  if (isStale === true) {
+  /* ================================
+     TRẠNG THÁI DỮ LIỆU
+     ================================ */
+
+  if (
+    dataStatus === "stale"
+  ) {
 
     updateElement.innerText +=
-      " • Dữ liệu có thể chậm";
+      " • Dữ liệu đang dùng giá gần nhất";
 
   }
 
@@ -844,18 +946,24 @@ function showWorldGold(
 
 
 /* =====================================================
-   HÀM GỌI API 1
-   /v1/spot/XAU-USD-SPOT
+   LẤY GIÁ TỪ XAUS.COM
    ===================================================== */
 
-async function getGoldPriceSpot() {
+async function getXausGoldPrice() {
+
+  const url =
+    "https://xaus.com/api/v1/spot?currency=USD&unit=oz&compact=1";
+
 
   const response =
     await fetch(
-      "https://api.goldprice.dev/v1/spot/XAU-USD-SPOT",
+      url,
       {
         method: "GET",
-        cache: "no-store"
+        cache: "no-store",
+        headers: {
+          "Accept": "application/json"
+        }
       }
     );
 
@@ -863,7 +971,7 @@ async function getGoldPriceSpot() {
   if (!response.ok) {
 
     throw new Error(
-      "Spot API HTTP " +
+      "XAUS HTTP " +
       response.status
     );
 
@@ -875,13 +983,20 @@ async function getGoldPriceSpot() {
 
 
   console.log(
-    "GoldPrice Spot:",
+    "XAUS GOLD DATA:",
     data
   );
 
 
+
+  /* ================================
+     GIÁ XAU/USD
+     ================================ */
+
   const price =
-    Number(data.price);
+    Number(
+      data.spot_usd_oz
+    );
 
 
   if (
@@ -890,16 +1005,66 @@ async function getGoldPriceSpot() {
   ) {
 
     throw new Error(
-      "Spot API không có giá hợp lệ"
+      "XAUS không trả về giá hợp lệ"
     );
 
   }
 
 
+
+  /* ================================
+     THỜI GIAN
+     ================================ */
+
+  let updatedAt =
+    data.updated_at ||
+    null;
+
+
+  if (
+    !updatedAt &&
+    data.data_state &&
+    data.data_state.as_of
+  ) {
+
+    updatedAt =
+      data.data_state.as_of;
+
+  }
+
+
+
+  /* ================================
+     TRẠNG THÁI
+     ================================ */
+
+  let status =
+    null;
+
+
+  if (
+    data.data_state &&
+    data.data_state.status
+  ) {
+
+    status =
+      data.data_state.status;
+
+  }
+
+
+
   return {
-    price: price,
-    computedAt: data.computed_at,
-    isStale: data.is_stale
+
+    price:
+      price,
+
+    updatedAt:
+      updatedAt,
+
+    status:
+      status
+
   };
 
 }
@@ -907,96 +1072,21 @@ async function getGoldPriceSpot() {
 
 
 /* =====================================================
-   HÀM GỌI API 2 - DỰ PHÒNG
-   /v1/prices?symbol=XAU-USD-SPOT
-   ===================================================== */
-
-async function getGoldPricePrices() {
-
-  const response =
-    await fetch(
-      "https://api.goldprice.dev/v1/prices?symbol=XAU-USD-SPOT",
-      {
-        method: "GET",
-        cache: "no-store"
-      }
-    );
-
-
-  if (!response.ok) {
-
-    throw new Error(
-      "Prices API HTTP " +
-      response.status
-    );
-
-  }
-
-
-  const data =
-    await response.json();
-
-
-  console.log(
-    "GoldPrice Prices:",
-    data
-  );
-
-
-  if (
-    !data.symbols ||
-    !Array.isArray(data.symbols) ||
-    data.symbols.length === 0
-  ) {
-
-    throw new Error(
-      "Prices API không có symbols"
-    );
-
-  }
-
-
-  const item =
-    data.symbols[0];
-
-
-  const price =
-    Number(item.price);
-
-
-  if (
-    !Number.isFinite(price) ||
-    price <= 0
-  ) {
-
-    throw new Error(
-      "Prices API không có giá hợp lệ"
-    );
-
-  }
-
-
-  return {
-    price: price,
-    computedAt: item.computed_at,
-    isStale: item.is_stale
-  };
-
-}
-
-
-
-/* =====================================================
-   HÀM CHÍNH
+   HÀM TẢI GIÁ VÀNG THẾ GIỚI
    ===================================================== */
 
 async function loadWorldGold() {
 
   const priceElement =
-    document.getElementById("xauPrice");
+    document.getElementById(
+      "xauPrice"
+    );
+
 
   const updateElement =
-    document.getElementById("xauUpdate");
+    document.getElementById(
+      "xauUpdate"
+    );
 
 
   try {
@@ -1004,57 +1094,34 @@ async function loadWorldGold() {
     priceElement.innerText =
       "Đang tải giá...";
 
+
     updateElement.innerText =
       "Đang kết nối dữ liệu XAU/USD...";
 
 
-    let result;
+
+    const result =
+      await getXausGoldPrice();
 
 
-    /* ==============================================
-       THỬ API SPOT TRƯỚC
-       ============================================== */
-
-    try {
-
-      result =
-        await getGoldPriceSpot();
-
-    }
-
-    catch (error1) {
-
-      console.warn(
-        "API Spot lỗi, chuyển sang API dự phòng:",
-        error1
-      );
-
-
-      /* ==========================================
-         API DỰ PHÒNG
-         ========================================== */
-
-      result =
-        await getGoldPricePrices();
-
-    }
-
-
-    /* HIỂN THỊ */
 
     showWorldGold(
+
       result.price,
-      result.computedAt,
-      result.isStale
+
+      result.updatedAt,
+
+      result.status
+
     );
 
-
   }
+
 
   catch (error) {
 
     console.error(
-      "KHÔNG THỂ LẤY GIÁ VÀNG THẾ GIỚI:",
+      "LỖI XAU/USD:",
       error
     );
 
@@ -1070,7 +1137,7 @@ async function loadWorldGold() {
 
 
     updateElement.innerText =
-      "Không kết nối được dữ liệu XAU/USD";
+      "Đang tạm thời không lấy được dữ liệu XAU/USD";
 
   }
 
@@ -1079,7 +1146,7 @@ async function loadWorldGold() {
 
 
 /* =====================================================
-   TẢI GIÁ NGAY KHI MỞ TRANG
+   TẢI NGAY KHI MỞ TRANG
    ===================================================== */
 
 loadWorldGold();
@@ -1087,7 +1154,7 @@ loadWorldGold();
 
 
 /* =====================================================
-   CẬP NHẬT MỖI 60 GIÂY
+   TỰ ĐỘNG CẬP NHẬT MỖI 60 GIÂY
    ===================================================== */
 
 setInterval(
@@ -1109,6 +1176,11 @@ function openAdmin() {
     );
 
 
+  /*
+     Giữ mật khẩu quản trị hiện tại
+     của file cũ của bạn tại đây.
+  */
+
   if (
     password === "Hoa210700@"
   ) {
@@ -1124,6 +1196,7 @@ function openAdmin() {
     );
 
   }
+
 
   else {
 
